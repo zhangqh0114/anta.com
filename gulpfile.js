@@ -36,7 +36,12 @@ gulp.task("sass", done => {
         .pipe(connect.reload());
     done();
 });
-
+//拷贝JS文件
+gulp.task("jquery",done=>{
+    gulp.src('src/js/*.js')
+    .pipe(gulp.dest('dist/js'));
+    done();
+});
 //监听事件
 gulp.task("watch", done => {
     gulp.watch('src/style/*.scss', gulp.series("sass"));
