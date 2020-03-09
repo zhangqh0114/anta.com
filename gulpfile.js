@@ -2,6 +2,7 @@ const gulp = require('gulp');
 const sass = require('gulp-sass');
 const connect = require('gulp-connect');
 const sourcemaps = require("gulp-sourcemaps");
+const babel = require("gulp-babel");  
 
 //搭建服务器环境
 gulp.task("server", done => {
@@ -36,18 +37,31 @@ gulp.task("sass", done => {
         .pipe(connect.reload());
     done();
 });
-//拷贝JS文件
-gulp.task("jquery",done=>{
+//拷贝libs 外部插件文件
+gulp.task("libs",done=>{
+    gulp.src('src/libs/*.js')
+    .pipe(gulp.dest('dist/libs'))
+    ;
+    done();
+});
+//拷贝js文件
+gulp.task("babel",done=>{
     gulp.src('src/js/*.js')
-    .pipe(gulp.dest('dist/js'));
+    .pipe(gulp.dest('dist/js'))
+    .pipe(babel({ presets: ["@babel/env"] }))
+    .pipe(connect.reload());
     done();
 });
 //监听事件
 gulp.task("watch", done => {
     gulp.watch('src/style/*.scss', gulp.series("sass"));
     gulp.watch('src/html/*.html', gulp.series("html"));
+    gulp.watch('src/img/*.{jpg,png}', gulp.series("imgs"));
+    gulp.watch('src/libs/*.js', gulp.series("libs"));
+    gulp.watch('src/js/*.js', gulp.series("babel"));
+
     done();
 });
 
 //默认任务
-gulp.task("default", gulp.parallel("server", "watch","imgs"));
+gulp.task("default", gulp.parallel("server", "watch"));
