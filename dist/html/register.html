@@ -225,7 +225,7 @@
                     if (data.code == 1) {
                         $.get("http://jx.xuzhixiang.top/ap/api/reg.php", {
                             username: $('.username').eq(1).val(),
-                            password: $('.comfirm').eq(1).val()
+                            password: $('.password').eq(1).val()
                         }).then(data => {
                             if (data.code == 1) {
                                 location.href = "login.html";

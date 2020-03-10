@@ -281,6 +281,14 @@
                     <li>网球系列</li>
                     <li>COC系列</li>
                     <li>时尚系列</li>
+                    <li>篮球系列</li>
+                    <li>跑步系列</li>
+                    <li>综训系列</li>
+                    <li>生活系列</li>
+                    <li>户外系列</li>
+                    <li>网球系列</li>
+                    <li>COC系列</li>
+                    <li>时尚系列</li>
                 </ul>
             </div>
             <!-- 版型 -->
@@ -292,10 +300,52 @@
                 <ul class="type">
                     <li>适脚鞋型</li>
                     <li>常规版型</li>
-                        <li>胶粘</li>
+                    <li>胶粘</li>
                     <li>修身版型</li>
                     <li>宽松版型</li>
                 </ul>
+            </div>
+        </div>
+        <!-- 列表 -->
+        <div class="lists">
+            <div class="lists-top">
+                <h3>
+                    <span>所有商品</span>
+                    <span></span>
+                </h3>
+                <div class="lists-right">
+                    <!-- 排序 -->
+                    <p><span>新品排序</span> <span class="listsRg-icon iconfont icon--xia"></span> </p>
+                    <ul>
+                        <li>新品排序</li>
+                        <li>销量排序</li>
+                        <li>价格从低到高</li>
+                        <li>价格从高到低</li>
+                    </ul>
+                    <!-- 页数 -->
+                    <div class="pagesNum">
+
+                        <span class="pages-icon iconfont icon--right"></span>
+
+                        <span class="pages-icon iconfont icon--left"></span>
+                        <span>/108</span>
+                        <span>1
+                            <ul>
+                                <li>1</li>
+                                <li>2</li>
+                                <li>3</li>
+                                <li>4</li>
+                                <li>5</li>
+                            </ul>
+                        </span>
+                    </div>
+
+
+                </div>
+            </div>
+            <!-- 商品列表 -->
+            <div class="lists-mid">
+
             </div>
         </div>
         <!-- 商品列表 -->
@@ -320,6 +370,73 @@
     <!-- footer 引入footer.html文件 -->
     <iframe src="footer.html" frameborder="0" marginwidth=0 marginheight=0 width=100% height=265></iframe>
     <script src="../libs/jquery.min.js"></script>
+    <script>
+
+        $(function () {
+            //获取商品列表
+            $.get("http://jx.xuzhixiang.top/ap/api/productlist.php", {
+                uid: "32973"
+            }).then(data => {
+                var str = '';
+                for (let i = 0; i < data.data.length; i++) {
+
+                    str += ` <li goods-id="${data.data[i].pid}">
+                            <a class="moving" href="product.html?pid=${data.data[i].pid}">
+                                <img src="${data.data[i].pimg}" alt="">
+                                <p>${data.data[i].pdesc}</p>
+                                <div class="small-pic">
+                                    <img src="${data.data[i].pimg}" alt="">
+                                    <img src="${data.data[i].pimg}" alt="">
+                                    <img src="${data.data[i].pimg}" alt="">
+                                    <img src="${data.data[i].pimg}" alt="">
+                                </div>
+                                <p>￥${data.data[i].pprice}</p>
+                            </a>
+                         </li>`;
+                }
+                $('.lists-mid').html(str);
+
+                $('.moving').hover(
+                    function () {
+                        $(this).css({
+                            "height": "360px",
+                            "top": "-20px",
+                            "box-shadow": "5px 5px 10px 5px #ccc",
+                            "z-index": "99"
+                        })
+                            .find('div').stop().show("slow").end()
+                            .find("p:first-of-type").css({ "white-space": "normal" }).end()
+                            .siblings().css({
+                                "height": "320px",
+                                "top": "0px",
+                                "box-shadow": "0px 0px 0px gray",
+                                "z-index": "1"
+                            });
+                    },
+                    function () {
+                        $(this).css({
+                            "height": "320px",
+                            "top": "0px",
+                            "box-shadow": "0px 0px 0px gray",
+                            "z-index": "1"
+                        })
+                            .find('div').stop().hide("slow").end()
+                            .find("p:first-of-type").css({ "white-space": "nowrap" }).end()
+                            .siblings().css({
+                                "height": "320px",
+                                "top": "0px",
+                                "box-shadow": "0px 0px 0px gray",
+                                "z-index": "1"
+                            });
+                    }
+                );
+
+            });
+
+
+        });
+
+    </script>
 </body>
 
 </html>
