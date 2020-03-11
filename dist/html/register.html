@@ -18,7 +18,7 @@
     <header id="backtop">
         <div class="headTop">
             <a href="login.html">登入</a>&nbsp;或&nbsp;<a href="register.html">注册</a>&nbsp;ANTA会员
-            <p><span class="iconfont icon-gouwuche"></span><span>1</span></p>
+            <p><span class="iconfont icon-gouwuche" id="cart"></span><span>1</span></p>
             <p><span class="iconfont icon-iconrx"></span></p>
         </div>
         <div class="headMid"></div>
@@ -166,6 +166,10 @@
     <script src="../libs/jquery.min.js"></script>
     <script>
         $(function () {
+            //跳转
+            $('#cart').click(function () {
+                location.href = "cart.html";
+            });
             //tab切换
             $('.btns>li').eq(0).click(function () {
                 $(this).css({ "background-color": "#000" }).siblings().css({ "background-color": "#fff" })
@@ -196,7 +200,7 @@
             })
             //注册端口
             //手机号注册
-            
+
             $(".submit-phone").click(function () {
                 //检测用户名是否存在
                 $.get("http://jx.xuzhixiang.top/ap/api/checkname.php", {

@@ -19,12 +19,12 @@
     <header id="backtop">
         <div class="headTop">
             <a href="login.html">登入</a>&nbsp;或&nbsp;<a href="register.html">注册</a>&nbsp;ANTA会员
-            <p><span class="iconfont icon-gouwuche"></span><span>1</span></p>
+            <p><span class="iconfont icon-gouwuche" id="cart"></span><span>1</span></p>
             <p><span class="iconfont icon-iconrx"></span></p>
         </div>
         <div class="headMid"></div>
         <div class="headBottom">
-            <div><a href="index.html"><img src="." alt="anta"></a></div>
+            <div><a href="index.html"><img src="../img/logo.jpg" alt="anta"></a></div>
             <nav>
                 <li><a href="javascript:;">男子</a>
                     <!-- 二级导航 -->
@@ -369,6 +369,8 @@
     <script src="../libs/jquery.min.js"></script>
     <script src="../libs/swiper.min.js"></script>
     <script>
+        
+
         var swiper = new Swiper('.swiper-container', {
             slidesPerView: 1,
             spaceBetween: 0,
@@ -387,6 +389,15 @@
             },
         });
         $(function () {
+            //登录后改名登录 
+            var userData = JSON.parse(localStorage.getItem("userData"));
+            if (userData.username) {
+                $('.headTop').find('a').eq(0).html(userData.username);
+            }
+            //跳转
+            $('#cart').click(function () {
+                location.href = "cart.html";
+            });
             $('.endor').hover(
                 function () {
                     $(this).find('img').eq(1).stop().animate({ 'opacity': 1, 'bottom': 0 }, 500);

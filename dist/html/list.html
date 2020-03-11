@@ -18,7 +18,7 @@
     <header id="backtop">
         <div class="headTop">
             <a href="login.html">登入</a>&nbsp;或&nbsp;<a href="register.html">注册</a>&nbsp;ANTA会员
-            <p><span class="iconfont icon-gouwuche"></span><span>1</span></p>
+            <p><span class="iconfont icon-gouwuche" id="cart"></span><span>1</span></p>
             <p><span class="iconfont icon-iconrx"></span></p>
         </div>
         <div class="headMid"></div>
@@ -128,7 +128,7 @@
             <!--  -->
             <!--  -->
             <div>
-                <p>性别 <span class="screen-icon iconfont icon--xia"></span></p>
+                <p>性别 <span class="screen-icon iconfont"></span></p>
                 <ul class="sex">
                     <li>男</li>
                     <li>女</li>
@@ -227,7 +227,7 @@
             <!--  -->
             <!--  -->
             <div>
-                <p>季节 <span class="screen-icon iconfont icon--xia"></span></p>
+                <p>季节 <span class="screen-icon iconfont"></span></p>
                 <ul class="season">
                     <li>冬季</li>
                     <li>秋季</li>
@@ -240,7 +240,7 @@
             <!--  -->
             <!--  -->
             <div>
-                <p>品牌 <span class="screen-icon iconfont icon--xia"></span></p>
+                <p>品牌 <span class="screen-icon iconfont"></span></p>
                 <ul class="brand">
                     <li>安踏</li>
                     <li>安踏儿童</li>
@@ -254,7 +254,7 @@
             <!--  -->
             <!--  -->
             <div>
-                <p>年份 <span class="screen-icon iconfont icon--xia"></span></p>
+                <p>年份 <span class="screen-icon iconfont"></span></p>
                 <ul class="year">
                     <li>2018</li>
                     <li>2011</li>
@@ -271,7 +271,7 @@
             <!--  -->
             <!--  -->
             <div>
-                <p>系列<span class="screen-icon iconfont icon--xia"></span></p>
+                <p>系列<span class="screen-icon iconfont"></span></p>
                 <ul class="series">
                     <li>篮球系列</li>
                     <li>跑步系列</li>
@@ -296,7 +296,7 @@
             <!--  -->
             <!--  -->
             <div>
-                <p>版型 <span class="screen-icon iconfont icon--xia"></span></p>
+                <p>版型 <span class="screen-icon iconfont "></span></p>
                 <ul class="type">
                     <li>适脚鞋型</li>
                     <li>常规版型</li>
@@ -373,6 +373,16 @@
     <script>
 
         $(function () {
+            //登录后改名登录 
+            var userData = JSON.parse(localStorage.getItem("userData"));
+            console.log(userData)
+            if (userData.username) {
+                $('.headTop').find('a').eq(0).html(userData.username);
+            }
+            //跳转
+            $('#cart').click(function () {
+                location.href = "cart.html";
+            });
             //获取商品列表
             $.get("http://jx.xuzhixiang.top/ap/api/productlist.php", {
                 uid: "32973"
@@ -433,7 +443,12 @@
 
             });
 
-
+            //筛选框
+            $('.screen>div>p').find('span').addClass('icon--shang');
+            $('.screen>div>p').click(function () {
+                $(this).find('span').toggleClass('icon--xia');
+                $(this).parent().find('ul').slideToggle();
+            });
         });
 
     </script>
