@@ -375,8 +375,7 @@
         $(function () {
             //登录后改名登录 
             var userData = JSON.parse(localStorage.getItem("userData"));
-            console.log(userData)
-            if (userData.username) {
+            if (userData) {
                 $('.headTop').find('a').eq(0).html(userData.username);
             }
             //跳转

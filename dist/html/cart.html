@@ -138,7 +138,7 @@
                         <p>款号:19999</p>
                         <p> 数量
                             <span class="minus">-</span>
-                            <input type="text" value="1" class="num">
+                            <input type="text" value="1" class="pnum">
                             <span class="plus">+</span>
                         </p>
                     </div>
@@ -221,10 +221,17 @@
                     for (let i = 0; i < $('.minus').length; i++) {
                         $('.minus').eq(i).click(function () {
                             let j = Number($(this).parent().find('.pnum').attr('value'));
+                            let id =  $(this).parent().parent().parent().attr("data-id");
                             j--;
                             if (j < 1) { j = 1 };
                             $(this).parent().find('.pnum').attr("value", j);
-                            num--;
+                            $.get("http://jx.xuzhixiang.top/ap/api/cart-update-num.php",{
+                                "uid":uid,
+                                "pid":id,
+                                "pnum":j
+                            }).then(data=>{
+                                location.reload();
+                            });
                         })
                     }
                     
@@ -232,16 +239,56 @@
                     for (let i = 0; i < $('.plus').length; i++) {
                         $('.plus').eq(i).click(function () {
                             let j = Number($(this).parent().find('.pnum').attr('value'));
+                            let id =  $(this).parent().parent().parent().attr("data-id");
                             j++;
                             if (j < 1) { j = 1 };
                             $(this).parent().find('.pnum').attr("value", j);
-                            num++;
+                            $.get("http://jx.xuzhixiang.top/ap/api/cart-update-num.php",{
+                                "uid":uid,
+                                "pid":id,
+                                "pnum":j
+                            }).then(data=>{
+                                location.reload();
+                            });
+                            
                         })
                     }
+                    //改
+                    for (let i = 0; i < $('.pnum').length; i++) {
+                        $('.pnum').eq(i).change(function () {
+                            let j = $(this).val();
+                            let id =  $(this).parent().parent().parent().attr("data-id");
+                            
+                            $(this).attr("value", j);
+                            $.get("http://jx.xuzhixiang.top/ap/api/cart-update-num.php",{
+                                "uid":uid,
+                                "pid":id,
+                                "pnum":j
+                            }).then(data=>{
+                                location.reload();
+                            });
+                            
+                        })
+                    }
+                    //删
+                    for (let i = 0; i < $('.delBtn').length; i++) {
+                        $('.delBtn').eq(i).click(function () {
+                            let id = $(this).parent().parent().attr('data-id');
+                            $(this).parent().parent().find('.ck').attr("checked", false);
+                            $(this).parent().parent().remove();
+                            $.get("http://jx.xuzhixiang.top/ap/api/cart-delete.php", {
+                                "uid": uid,
+                                "pid": id
+                            }).then(data => {
+                                location.reload();
+                            })
+                        })
+                    };
                     //全选
                     let count = 0;
                     for (let i = 0; i < $('.ck').length; i++) {
                         $('.ck').eq(i).click(function () {
+                            
                             let count = 0;
                             for (let j = 0; j < $('.ck').length; j++) {
 
@@ -283,21 +330,7 @@
                         }
                        
                     })
-                    //删
                     
-                    for (let i = 0; i < $('.delBtn').length; i++) {
-                        $('.delBtn').eq(i).click(function () {
-                            let id = $(this).parent().parent().attr('data-id');
-                            $(this).parent().parent().find('.ck').attr("checked", false);
-                            $(this).parent().parent().remove();
-                            $.get("http://jx.xuzhixiang.top/ap/api/cart-delete.php", {
-                                "uid": uid,
-                                "pid": id
-                            }).then(data => {
-                                location.reload();
-                            })
-                        })
-                    };
 
                     //全删
                     $('.delall').click(function () {
